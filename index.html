@@ -6,89 +6,105 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <title>Sort Me Out</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
+
 </head>
 
 <body>
     <div class="nav">
-        <img class="logo" src="logo no bg.png" alt="sortItOut Logo">
-        <h1 class="nav-heading">Sort It Out</h1>
+        <img class="logo" src="images/logo no bg.png" alt="sortItOut Logo">
     </div>
 
-    <div id="leftHalf"></div>
-    <div id="rightHalf">
-
-        
-        
-
-
-
-
-    </div>
-    <!-- 
-    <div class="container" id="first-div-description">
-        
-        <form name="uploadFile">
-
-            <div class="input-group mb-3">
-                <input type="file" id="fileUpload"  class="form-control" accept=".txt" placeholder="Upload .txt file" onchange="checkFile()" hidden>
+    <div class="headerBackground">
+        <div class="headingDiv">
+            <div class="title">
+               <h2>Sort It Out</h2>
+            </div>   
+        </div>
+    
+        <div class="descriptionDiv">
+            <div class="description">
+                <p> Your best resource to sort numerical lists</p>
             </div>
-
-            <div>
-                <div class="containerUpload">
-                    <div class="drop_zone" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
-                        <h5><strong>Numerical List Sorter</strong></h5>
-            
-                        <div class icon="icon">
-                            <img class="file-icon" src="fileIcon.png">
-                        </div>
-                    <span class="dragText">Drag your file here</span>
-                    <span class="dragText">or <span type= "button" id= "inputButton" class= "button" onclick="input()">Browse</span></span>
+        </div>    
+    </div>
+    
+    <div id="uploadForm">
+        <div class="container" id="first-div-description">
+            <form name="uploadFile">
+                <div class="input-group mb-3">
+                    <input type="file" id="fileUpload"  class="form-control" accept=".txt" placeholder="Upload .txt file" onchange="checkFile()" hidden>
                 </div>
-            </div>
 
-            <br>
+                <div>
+                    <div class="containerUpload">
+                        <div class="drop_zone" id="dropZone" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                            <div id="dropText">
+                                <h5><strong>Upload (.txt)</strong></h5>
+                                <div class icon="icon">
+                                    <img class="file-icon" src="images/uploadCloud.gif">
+                                </div>
+                                <span class="dragText">Drag your file here</span> 
+                                <span class="dragText">or <span type= "button" id= "inputButton" class= "button" onclick="input()">Browse</span></span>
+                            </div>
+                            <div id="uploadedFile" hidden>
+                                <div> <img src="https://img.icons8.com/color/144/000000/file.png" class="animated bounce infinite" alt="file Icon"/> <br> </div>
+                                <h6 id="fileName"></h6>
+                            </div>
+                        </div>
 
-            <div>
-                  <input type="radio" name="options" id="option1" autocomplete="off" checked> Ascending
-                  <input type="radio" name="options" id="option2" autocomplete="off"> Descending
-            </div>
+                        <div id="myProgress" hidden>
+                            <div id="myBar"></div>
+                        </div>
+                    </div>
+                </div>
 
-            <br>
+                <br>
+                <div id="sortButtons">
+                    <div>
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Ascending
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Descending
+                    </div>
 
-            <div>
-                <button id="sortIt" type="button" class="btn btn-dark" onclick="doFile()">Sort File </button>
+                    <br>
+                    <div>
+                        <button id="sortIt" type="button" class="btn btn-dark" onclick="doFile()">Sort File </button>
+                        <button type="button" class="btn btn-primary" onclick="refresh()"><span class="bi bi-arrow-clockwise"></span></button>
+                    </div>
+                </div>
+                <br>
+
+                <div>
+                    <div id="noFileAlert" class="alert alert-info alert-dismissible fade show" role="alert" hidden>
+                        <strong>No File Uploaded!</strong> Upload a file to begin sorting
+                    </div>
+                    <div id="wrongFileTypeAlert" class="alert alert-info alert-dismissible fade show" role="alert" hidden>
+                        <strong>Wrong File Type!</strong> Upload a .txt file
+                    </div>
+                </div>
+
+                <br>
+            </form>
+        </div>
+    </div>
+
+    <div id="download" class="download_zone" hidden>
+        <div>
+            <h3 class="card-text">Your sorted list is ready for download</h3>
+            <img src="images/textfile.png" class="textFile" alt="textFileImage">
+            <div class="card-body">
+                <h5 class="card-title" id="downloadName"></h5>
+                <br>
+                <button type="button" class="btn btn-outline-success" onclick="download()">Download</button>
                 <button type="button" class="btn btn-primary" onclick="refresh()"><span class="bi bi-arrow-clockwise"></span></button>
             </div>
-
-            <br>
-
-            <div>
-                <div id="noFileAlert" class="alert alert-info alert-dismissible fade show" role="alert" hidden>
-                    <strong>No File Uploaded!</strong> Upload a file to begin sorting
-                  </div>
-                <div id="wrongFileTypeAlert" class="alert alert-info alert-dismissible fade show" role="alert" hidden>
-                    <strong>Wrong File Type!</strong> Upload a .txt file
-                  </div>
-            </div>
-
-            <br>
-
-            <div id="listUploaded" hidden>
-                <br>
-                <h4>Sorted List</h4>
-                <br>
-                
-                <img src="https://www.freeiconspng.com/uploads/extension-file-format-txt-icon--icon-search-engine-25.png" width="150" alt="Simple Png Txt File" />
-            </div>
-        </form>
+        </div>
     </div>
-    -->
-
 
     <!--JS Script-->
-    <script type="text/javascript" src="events.js" ></script>
-    <script type="text/javascript" src="sorting.js"></script>
+    <script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
+    <script type="text/javascript" src="scripts/events.js" ></script>
+    <script type="text/javascript" src="scripts/sorting.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>
 </html>
