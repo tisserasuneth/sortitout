@@ -42,6 +42,8 @@ function checkDropped(file){
 }
 
 function doFile() {
+    document.getElementById('loading').hidden = false;
+
     [file] = document.getElementById('fileUpload').files;
     if(droppedFile){
       readIt(droppedFile);
@@ -89,16 +91,13 @@ function writeFile(sortedList,fileName){
 });
   listInfo.push(fileName);
   listInfo.push(blob);
-  document.getElementById("downloadName").innerHTML = fileName;
-  document.getElementById('dropZone').hidden = true;
-  document.getElementById('sortButtons').hidden = true;
-  document.getElementById('myProgress').hidden = false;
+  loader();
   move();
 }
 
 function download(){
   SaveAsFile(listInfo.pop(), listInfo.pop(), "text/plain;charset=utf-8");
-  location.reload();
+  refresh()
 }
 
 function SaveAsFile(t,f,m) {
@@ -110,26 +109,17 @@ function SaveAsFile(t,f,m) {
   }
 }
 
-//Progress Bar copied from w3schools.com
-var i = 0;
-function move() {
-  if (i == 0) {
-    i = 1;
-    var elem = document.getElementById("myBar");
-    var width = 1;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-        i = 0;
-        document.getElementById('uploadForm').hidden = true;
-        document.getElementById('download').hidden = false;
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
-  }
+function loader(){
+  const loading = document.getElementById('loading');
+  loading.hidden = false;
+
+  setTimeout(() => {
+    loading.hidden = true;
+    document.getElementById('sortButtons').hidden = true;
+    document.getElementById('downloadButton').hidden = false;
+    document.getElementById('downloadIt').hidden = false;
+  }, 3000); 
+  
 }
 
 function refresh(){
